@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>To Do app</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="{{url_for('home')}}">To Do</a>
+    </nav><br><br>
+    <div class="d-flex justify-content-center">
+        <div class="card justify-content-center" style="width:400px">
+            <form action="/add" method="post">
+                <div><br>
+                    <label>Enter task</label>
+                    <input type="text" name="task">
+                    <button type="submit">Add task</button>
+                </div>
+            </form>
+            <br><br>
+            <h4 class="card-title">List</h4>
+            <ul>
+                {% for task in todo_list %}
+                <li>
+                    {{ task.task }}
+                    {% if not task.done %}
+                        - <a href="{{ url_for('update', task_id=task.task_id) }}">Mark as Done</a>
+                    {% endif %}
+                    - <a href="{{ url_for('delete', task_id=task.task_id) }}">Delete</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>   
+</body>
+</html>
